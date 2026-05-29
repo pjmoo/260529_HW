@@ -934,3 +934,52 @@ body {
     margin-bottom: 16px;
   }
 }
+
+/* ─── 미리보기 전용 스타일 ─── */
+.preview-mode-body {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: default;
+}
+
+.preview-text-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #3e4452;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 30px;
+  z-index: 1;
+  position: relative;
+}
+
+.preview-tags-margin {
+  margin-top: auto;
+  padding-top: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+.preview-header-left {
+  flex: 1;
+  padding-right: 15px;
+}
+
+.preview-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── 브랜드 링크 스타일 ─── */
+.brand-link {
+  text-decoration: none;
+  display: block;
+}
+.brand-link:hover .brand-title {
+  transform: translateY(-2px);
+  color: #404656;
+  text-shadow: 0 4px 8px rgba(80, 88, 108, 0.15);
+}
+.brand-link:hover .brand-subtitle {
+  color: rgba(80, 88, 108, 0.95);
+}
+

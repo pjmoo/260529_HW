@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>황혼과 여명의 기록소</title>
+    <title>황혼과 여명의 기록소 — AetherNotes</title>
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.ico" />
@@ -25,6 +25,139 @@
     />
 
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* ─── 랜딩 페이지 전용 스타일 ─── */
+      body {
+        justify-content: center;
+        align-items: center;
+      }
+      .landing-wrapper {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+      .landing-header {
+        text-align: center;
+        animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .landing-title {
+        font-family: var(--font-fancy);
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--color-deep-steel);
+        letter-spacing: -1px;
+        text-shadow: 0 4px 12px rgba(255, 255, 255, 0.45);
+        margin-bottom: 12px;
+      }
+      .landing-subtitle {
+        font-size: 1.15rem;
+        letter-spacing: 3px;
+        color: rgba(80, 88, 108, 0.85);
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+      .landing-desc {
+        max-width: 640px;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: #3e4452;
+        margin: 0 auto 36px auto;
+        word-break: keep-all;
+      }
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .landing-enter-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 38px;
+        border-radius: 20px;
+        background: var(--color-deep-steel);
+        color: #ffffff;
+        font-size: 1.05rem;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 8px 32px rgba(80, 88, 108, 0.25);
+        transition: var(--transition-cozy);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+      }
+      .landing-enter-btn i {
+        font-size: 1.3rem;
+        transition: transform 0.3s ease;
+      }
+      .landing-enter-btn:hover {
+        background: #404656;
+        box-shadow: 0 12px 40px rgba(80, 88, 108, 0.4);
+        transform: translateY(-4px);
+      }
+      .landing-enter-btn:hover i {
+        transform: translateX(6px);
+      }
+      .landing-enter-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* 에디토리얼 푸터 */
+      .landing-footer {
+        font-size: 0.8rem;
+        color: rgba(80, 88, 108, 0.5);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        animation: fadeIn 1.8s ease both;
+      }
+
+      /* 애니메이션 정의 */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* 모바일 최적화 반응형 */
+      @media (max-width: 768px) {
+        .landing-title {
+          font-size: 2.4rem;
+        }
+        .landing-subtitle {
+          font-size: 0.95rem;
+          letter-spacing: 2px;
+        }
+        .landing-desc {
+          font-size: 0.95rem;
+          padding: 0 16px;
+        }
+        .landing-enter-btn {
+          padding: 14px 30px;
+          font-size: 0.95rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- 몽환적인 백그라운드 오브 -->
@@ -34,190 +167,26 @@
       <div class="orb orb-3"></div>
     </div>
 
-    <div class="app-container">
-      <!-- ─── 좌측 사이드바 ─── -->
-      <aside class="sidebar glass-panel">
-        <div class="brand-section">
-          <h1 class="brand-title">AetherNotes</h1>
-          <p class="brand-subtitle">황혼과 여명의 기록소</p>
+    <div class="landing-wrapper">
+      <header class="landing-header">
+        <h1 class="landing-title">황혼과 여명의 기록소</h1>
+        <p class="landing-subtitle">AetherNotes</p>
+        <p class="landing-desc">
+          바쁜 삶 속에서 스쳐 지나가는 찬란한 영감과 깊은 단상들, <br />
+          마치 황혼과 여명 사이 스러지는 빛처럼 머물 곳이 필요하지 않으신가요?<br />
+          차분한 감성이 깃든 당신만의 안식처에서 생각의 편린들을 부드럽게 붙잡아 보세요.
+        </p>
+        <div class="btn-container">
+          <a href="memo.html" class="landing-enter-btn">
+            <span>기록소 입장하기</span>
+            <i class="material-symbols-outlined">east</i>
+          </a>
         </div>
+      </header>
 
-        <!-- 시계 위젯 -->
-        <div class="clock-widget">
-          <div class="analog-clock">
-            <div class="clock-face">
-              <div id="hour-hand" class="hand hour-hand"></div>
-              <div id="min-hand" class="hand minute-hand"></div>
-              <div id="sec-hand" class="hand second-hand"></div>
-              <div class="center-pin"></div>
-            </div>
-          </div>
-          <div id="digital-clock" class="digital-time">00:00:00</div>
-        </div>
-
-        <!-- 메뉴 단상 -->
-        <nav class="sidebar-menu">
-          <span class="menu-header">기록 보관소</span>
-          <button
-            id="menu-all"
-            class="menu-item active"
-            onclick="filterByTag('all')"
-          >
-            <i class="material-symbols-outlined">auto_awesome</i>
-            <span>모든 에테르</span>
-            <span id="badge-all" class="badge">0</span>
-          </button>
-          <button id="menu-pin" class="menu-item" onclick="filterByPinned()">
-            <i class="material-symbols-outlined">push_pin</i>
-            <span>보정된 기록</span>
-            <span id="badge-pinned" class="badge">0</span>
-          </button>
-
-          <span class="menu-header">기억 파편 (태그)</span>
-          <div
-            id="tag-menu-list"
-            style="display: flex; flex-direction: column; gap: 4px"
-          >
-            <!-- 태그 목록 동적 생성 -->
-          </div>
-        </nav>
-
-        <!-- 동기화 정보 단상 -->
-        <div class="sync-widget">
-          <button
-            id="sync-button"
-            class="sync-btn"
-            onclick="triggerSyncSimulation()"
-          >
-            <i class="material-symbols-outlined">sync</i>
-          </button>
-          <div class="sync-info">
-            <div id="sync-status-text" class="sync-status">
-              에테르 성운 동기화됨
-            </div>
-            <div id="sync-time-text" class="sync-time">최근 보정: 방금 전</div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- ─── 메인 캔버스 ─── -->
-      <main class="main-canvas">
-        <!-- 상단 툴바 -->
-        <header class="header-toolbar glass-panel">
-          <div class="search-container">
-            <i class="material-symbols-outlined search-icon">search</i>
-            <input
-              type="text"
-              id="search-input"
-              class="search-input"
-              placeholder="스쳐가는 기억 검색..."
-              oninput="handleSearch()"
-            />
-          </div>
-          <div class="toolbar-actions">
-            <button
-              class="btn-icon"
-              onclick="toggleLayoutView()"
-              title="보기 전환"
-            >
-              <i id="layout-icon" class="material-symbols-outlined"
-                >grid_view</i
-              >
-            </button>
-            <button class="btn-primary" onclick="openNewEditor()">
-              <i class="material-symbols-outlined">edit_square</i>
-              <span>메모</span>
-            </button>
-          </div>
-        </header>
-
-        <!-- 메모 보드 Grid -->
-        <section id="notes-board" class="notes-board">
-          <!-- 노트를 동적으로 렌더링 -->
-        </section>
-      </main>
+      <footer class="landing-footer">
+        © 2026 AetherNotes. Crafted with deep reflection.
+      </footer>
     </div>
-
-    <!-- ─── 글쓰기 집중 에디터 모달 ─── -->
-    <div id="editor-modal" class="editor-modal">
-      <div
-        id="editor-container"
-        class="editor-container glass-panel theme-default"
-      >
-        <!-- 에디터 헤더 -->
-        <header class="editor-header">
-          <div class="editor-preset-selectors">
-            <div
-              class="preset-dot p-default active"
-              onclick="setEditorTheme('theme-default', this)"
-            ></div>
-            <div
-              class="preset-dot p-purple"
-              onclick="setEditorTheme('theme-purple', this)"
-            ></div>
-            <div
-              class="preset-dot p-mint"
-              onclick="setEditorTheme('theme-mint', this)"
-            ></div>
-            <div
-              class="preset-dot p-peach"
-              onclick="setEditorTheme('theme-peach', this)"
-            ></div>
-          </div>
-
-          <div id="editor-status" class="editor-save-status">
-            <span></span> 에테르 안전함
-          </div>
-        </header>
-
-        <!-- 에디터 입력부 -->
-        <div class="editor-body">
-          <input
-            type="text"
-            id="editor-title"
-            class="editor-title-input"
-            placeholder="기록의 이름..."
-            oninput="triggerAutosave()"
-          />
-          <textarea
-            id="editor-text"
-            class="editor-textarea"
-            placeholder="여기에 당신의 몽상을 흘려보내세요..."
-            oninput="triggerAutosave()"
-          ></textarea>
-          <input
-            type="text"
-            id="editor-tags"
-            class="editor-tags-input"
-            placeholder="쉼표(,)로 태그를 구별해 보세요 (예: 일상, 영감)"
-            oninput="triggerAutosave()"
-          />
-        </div>
-
-        <!-- 에디터 푸터 -->
-        <footer class="editor-footer">
-          <button
-            id="editor-zen-btn"
-            class="editor-zen-btn"
-            onclick="toggleZenTimer()"
-          >
-            <i class="material-symbols-outlined">hourglass_empty</i>
-            <span id="editor-zen-text">몰입 타이머 개시</span>
-          </button>
-
-          <div class="editor-actions">
-            <button class="btn-secondary" onclick="closeEditor()">닫기</button>
-          </div>
-        </footer>
-      </div>
-    </div>
-
-    <!-- 토스트 알림 컨테이너 -->
-    <div id="toast-container" class="toast-container"></div>
-
-    <!-- 핵심 로직 외부 JS 파일 호출 -->
-    <script src="utils.js"></script>
-    <script src="clock.js"></script>
-    <script src="script.js"></script>
   </body>
 </html>

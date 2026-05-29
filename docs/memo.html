@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>황혼과 여명의 기록소</title>
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 몽환적인 백그라운드 오브 -->
+    <div class="orb-container">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <div class="app-container">
+      <!-- ─── 좌측 사이드바 ─── -->
+      <aside class="sidebar glass-panel">
+        <a href="index.html" class="brand-link">
+          <div class="brand-section">
+            <h1 class="brand-title">AetherNotes</h1>
+            <p class="brand-subtitle">황혼과 여명의 기록소</p>
+          </div>
+        </a>
+
+        <!-- 시계 위젯 -->
+        <div class="clock-widget">
+          <div class="analog-clock">
+            <div class="clock-face">
+              <div id="hour-hand" class="hand hour-hand"></div>
+              <div id="min-hand" class="hand minute-hand"></div>
+              <div id="sec-hand" class="hand second-hand"></div>
+              <div class="center-pin"></div>
+            </div>
+          </div>
+          <div id="digital-clock" class="digital-time">00:00:00</div>
+        </div>
+
+        <!-- 메뉴 단상 -->
+        <nav class="sidebar-menu">
+          <span class="menu-header">기록 보관소</span>
+          <button
+            id="menu-all"
+            class="menu-item active"
+            onclick="filterByTag('all')"
+          >
+            <i class="material-symbols-outlined">auto_awesome</i>
+            <span>모든 에테르</span>
+            <span id="badge-all" class="badge">0</span>
+          </button>
+          <button id="menu-pin" class="menu-item" onclick="filterByPinned()">
+            <i class="material-symbols-outlined">push_pin</i>
+            <span>보정된 기록</span>
+            <span id="badge-pinned" class="badge">0</span>
+          </button>
+
+          <span class="menu-header">기억 파편 (태그)</span>
+          <div
+            id="tag-menu-list"
+            style="display: flex; flex-direction: column; gap: 4px"
+          >
+            <!-- 태그 목록 동적 생성 -->
+          </div>
+        </nav>
+
+        <!-- 동기화 정보 단상 -->
+        <div class="sync-widget">
+          <button
+            id="sync-button"
+            class="sync-btn"
+            onclick="triggerSyncSimulation()"
+          >
+            <i class="material-symbols-outlined">sync</i>
+          </button>
+          <div class="sync-info">
+            <div id="sync-status-text" class="sync-status">
+              에테르 성운 동기화됨
+            </div>
+            <div id="sync-time-text" class="sync-time">최근 보정: 방금 전</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ─── 메인 캔버스 ─── -->
+      <main class="main-canvas">
+        <!-- 상단 툴바 -->
+        <header class="header-toolbar glass-panel">
+          <div class="search-container">
+            <i class="material-symbols-outlined search-icon">search</i>
+            <input
+              type="text"
+              id="search-input"
+              class="search-input"
+              placeholder="스쳐가는 기억 검색..."
+              oninput="handleSearch()"
+            />
+          </div>
+          <div class="toolbar-actions">
+            <button
+              class="btn-icon"
+              onclick="toggleLayoutView()"
+              title="보기 전환"
+            >
+              <i id="layout-icon" class="material-symbols-outlined"
+                >grid_view</i
+              >
+            </button>
+            <button class="btn-primary" onclick="openNewEditor()">
+              <i class="material-symbols-outlined">edit_square</i>
+              <span>메모</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- 메모 보드 Grid -->
+        <section id="notes-board" class="notes-board">
+          <!-- 노트를 동적으로 렌더링 -->
+        </section>
+      </main>
+    </div>
+
+    <!-- ─── 글쓰기 집중 에디터 모달 ─── -->
+    <div id="editor-modal" class="editor-modal">
+      <div
+        id="editor-container"
+        class="editor-container glass-panel theme-default"
+      >
+        <!-- 에디터 헤더 -->
+        <header class="editor-header">
+          <div class="editor-preset-selectors">
+            <div
+              class="preset-dot p-default active"
+              onclick="setEditorTheme('theme-default', this)"
+            ></div>
+            <div
+              class="preset-dot p-purple"
+              onclick="setEditorTheme('theme-purple', this)"
+            ></div>
+            <div
+              class="preset-dot p-mint"
+              onclick="setEditorTheme('theme-mint', this)"
+            ></div>
+            <div
+              class="preset-dot p-peach"
+              onclick="setEditorTheme('theme-peach', this)"
+            ></div>
+          </div>
+
+          <div id="editor-status" class="editor-save-status">
+            <span></span> 에테르 안전함
+          </div>
+        </header>
+
+        <!-- 에디터 입력부 -->
+        <div class="editor-body">
+          <input
+            type="text"
+            id="editor-title"
+            class="editor-title-input"
+            placeholder="기록의 이름..."
+            oninput="triggerAutosave()"
+          />
+          <textarea
+            id="editor-text"
+            class="editor-textarea"
+            placeholder="여기에 당신의 몽상을 흘려보내세요..."
+            oninput="triggerAutosave()"
+          ></textarea>
+          <input
+            type="text"
+            id="editor-tags"
+            class="editor-tags-input"
+            placeholder="쉼표(,)로 태그를 구별해 보세요 (예: 일상, 영감)"
+            oninput="triggerAutosave()"
+          />
+        </div>
+
+        <!-- 에디터 푸터 -->
+        <footer class="editor-footer">
+          <button
+            id="editor-zen-btn"
+            class="editor-zen-btn"
+            onclick="toggleZenTimer()"
+          >
+            <i class="material-symbols-outlined">hourglass_empty</i>
+            <span id="editor-zen-text">몰입 타이머 개시</span>
+          </button>
+
+          <div class="editor-actions">
+            <button class="btn-secondary" onclick="closeEditor()">닫기</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ─── 기록 미리보기 모달 ─── -->
+    <div id="preview-modal" class="editor-modal">
+      <div id="preview-container" class="editor-container glass-panel">
+        <!-- 헤더: 제목과 핀 상태 -->
+        <header class="editor-header">
+          <div class="preview-header-left">
+            <h2 id="preview-title" class="note-title"></h2>
+          </div>
+          <button
+            id="preview-pin-display"
+            class="note-pin-btn"
+            title="상단 고정"
+          >
+            <i class="material-symbols-outlined">push_pin</i>
+          </button>
+        </header>
+
+        <!-- 본문: 읽기 전용 텍스트와 태그 -->
+        <div class="editor-body preview-mode-body">
+          <div id="preview-text" class="preview-text-content"></div>
+          <div id="preview-tags" class="note-tags preview-tags-margin"></div>
+        </div>
+
+        <!-- 푸터: 날짜 및 작업 버튼 -->
+        <footer class="editor-footer">
+          <div class="preview-meta">
+            <span id="preview-date" class="note-date"></span>
+          </div>
+          <div class="editor-actions">
+            <button id="preview-copy-btn" class="btn-secondary">
+              <i class="material-symbols-outlined" style="font-size: 1.2rem"
+                >content_copy</i
+              >
+              복사
+            </button>
+            <button id="preview-edit-btn" class="btn-primary">
+              <i class="material-symbols-outlined" style="font-size: 1.2rem"
+                >edit</i
+              >
+              기록 수정
+            </button>
+            <button class="btn-secondary" onclick="closePreview()">닫기</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- 토스트 알림 컨테이너 -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- 핵심 로직 외부 JS 파일 호출 -->
+    <script src="utils.js"></script>
+    <script src="clock.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

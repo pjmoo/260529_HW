@@ -9,6 +9,7 @@ let currentEditorTheme = "theme-default";
 // Zen 포커스 타이머 변수
 let zenInterval = null;
 let zenTimeRemaining = 0; // 초 단위
+let activePreviewNoteId = null;
 
 // ─── 초기 로드 및 설정 ───
 window.addEventListener("DOMContentLoaded", () => {
@@ -130,7 +131,7 @@ function renderNotes() {
       // 버튼이나 아이콘을 직접 클릭했을 때는 에디터를 열지 않음
       if (e.target.closest(".action-btn") || e.target.closest(".note-pin-btn"))
         return;
-      openEditorForEdit(id);
+      openPreview(id);
     };
 
     const isTimerRunning = activeEditorNoteId === id && zenInterval !== null;
@@ -222,6 +223,45 @@ function filterByTag(tag) {
 function filterByPinned() {
   currentFilter = { type: "pinned", value: null };
   renderApp();
+}
+
+// ─── 미리보기 제어 ───
+function openPreview(id) {
+  const note = notes.find((n) => n.id === id);
+  if (!note) return;
+
+  activePreviewNoteId = id;
+  $("preview-title").textContent = note.title || "무제";
+  // HTML 이스케이프 후 줄바꿈을 <br>로 변환하여 출력
+  $("preview-text").innerHTML = escapeHTML(note.body).replace(/\n/g, "<br>");
+  $("preview-tags").innerHTML = note.tags
+    .map((t) => `<span class="tag-pill">#${escapeHTML(t)}</span>`)
+    .join("");
+  $("preview-date").textContent = `기록 시점: ${formatDate(note.createdAt)}`;
+
+  const pinIcon = $("preview-pin-display").querySelector("i");
+  pinIcon.textContent = note.pinned ? "keep" : "push_pin";
+
+  // 미리보기 내 핀 토글 버튼
+  $("preview-pin-display").onclick = () => {
+    togglePin(id);
+    pinIcon.textContent = notes.find((n) => n.id === id).pinned
+      ? "keep"
+      : "push_pin";
+  };
+
+  $("preview-copy-btn").onclick = () => copyNoteToClipboard(id);
+  $("preview-edit-btn").onclick = () => {
+    closePreview();
+    openEditorForEdit(id);
+  };
+
+  $("preview-modal").classList.add("active");
+}
+
+function closePreview() {
+  $("preview-modal").classList.remove("active");
+  activePreviewNoteId = null;
 }
 
 function toggleLayoutView() {
